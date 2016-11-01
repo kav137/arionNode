@@ -1,0 +1,434 @@
+{
+   "data":{
+      "method":"Lb*Kp*Kc*Ke*Kq",
+      "coefficients":[
+         {
+            "Default":"Q",
+            "Key":"Kq",
+            "Name":"Коэффициент приёмки"
+         },
+         {
+            "Default":"X",
+            "Key":"Ke",
+            "Name":"Коэффициент эксплуатации"
+         },
+         {
+            "Default":"0,4*(C^0,14)",
+            "Key":"Kc",
+            "Name":"Коэффициент, зависящий от значения номинальной ёмкости"
+         },
+         {
+            "Default":"A*(((I/S)^H)+1)*(exp(B*(((Tn+273)/N)^G)))",
+            "Key":"Kp",
+            "Name":"Коэффициент режима работы"
+         },
+         {
+            "Default":"L",
+            "Key":"Lb",
+            "Name":"Базовая интенсивность отказов"
+         }
+      ],
+      "properties":[
+         {
+            "Answer":[
+               {
+                  "Id":"7",
+                  "Property":[
+                     {
+                        "Type":"2",
+                        "Min":"0",
+                        "Max":"100",
+                        "Visible":"false",
+                        "Access":"",
+                        "Text":"",
+                        "Id":"0",
+                        "Default":"4",
+                        "Key":"X",
+                        "Name":"Коэффициент эксплуатации"
+                     }
+                  ],
+                  "Name":"Салонная аппаратура возд.средств"
+               },
+               {
+                  "Id":"6",
+                  "Property":[
+                     {
+                        "Type":"2",
+                        "Min":"0",
+                        "Max":"100",
+                        "Visible":"false",
+                        "Access":"",
+                        "Text":"",
+                        "Id":"0",
+                        "Default":"5",
+                        "Key":"X",
+                        "Name":"Коэффициент эксплуатации"
+                     }
+                  ],
+                  "Name":"Возимая аппаратура"
+               },
+               {
+                  "Id":"5",
+                  "Property":[
+                     {
+                        "Type":"2",
+                        "Min":"0",
+                        "Max":"100",
+                        "Visible":"false",
+                        "Access":"",
+                        "Text":"",
+                        "Id":"0",
+                        "Default":"3",
+                        "Key":"X",
+                        "Name":"Коэффициент эксплуатации"
+                     }
+                  ],
+                  "Name":"Мобильная аппаратура"
+               },
+               {
+                  "Id":"4",
+                  "Property":[
+                     {
+                        "Type":"2",
+                        "Min":"0",
+                        "Max":"100",
+                        "Visible":"false",
+                        "Access":"",
+                        "Text":"",
+                        "Id":"0",
+                        "Default":"1,5",
+                        "Key":"X",
+                        "Name":"Коэффициент эксплуатации"
+                     }
+                  ],
+                  "Name":"Переносная аппаратура (стац. работа)"
+               },
+               {
+                  "Id":"3",
+                  "Property":[
+                     {
+                        "Type":"2",
+                        "Min":"0",
+                        "Max":"100",
+                        "Visible":"false",
+                        "Access":"",
+                        "Text":"",
+                        "Id":"0",
+                        "Default":"1,3",
+                        "Key":"X",
+                        "Name":"Коэффициент эксплуатации"
+                     }
+                  ],
+                  "Name":"Стационарные условия (открытый воздух)"
+               },
+               {
+                  "Id":"2",
+                  "Property":[
+                     {
+                        "Type":"2",
+                        "Min":"0",
+                        "Max":"100",
+                        "Visible":"false",
+                        "Access":"",
+                        "Text":"",
+                        "Id":"0",
+                        "Default":"1,1",
+                        "Key":"X",
+                        "Name":"Коэффициент эксплуатации"
+                     }
+                  ],
+                  "Name":"Стационарные условия (на предприятии)"
+               },
+               {
+                  "Id":"1",
+                  "Property":[
+                     {
+                        "Type":"2",
+                        "Min":"0",
+                        "Max":"100",
+                        "Visible":"false",
+                        "Access":"",
+                        "Text":"",
+                        "Id":"0",
+                        "Default":"1",
+                        "Key":"X",
+                        "Name":"Коэффициент эксплуатации"
+                     }
+                  ],
+                  "Name":"Стационарные условия (лабораторные)"
+               },
+               {
+                  "Id":"0",
+                  "Property":[
+                     {
+                        "Type":"2",
+                        "Min":"0",
+                        "Max":"100",
+                        "Visible":"false",
+                        "Access":"",
+                        "Text":"",
+                        "Id":"0",
+                        "Default":"5",
+                        "Key":"X",
+                        "Name":"Коэффициент эксплуатации"
+                     }
+                  ],
+                  "Name":"Неизвестно"
+               }
+            ],
+            "Type":"4",
+            "Min":"",
+            "Max":"",
+            "Visible":"true",
+            "Access":"",
+            "Text":"",
+            "Id":"11",
+            "Default":"0",
+            "Key":"",
+            "Name":"Условия эксплуатации"
+         },
+         {
+            "Answer":[
+               {
+                  "Id":"5",
+                  "Property":[
+                     {
+                        "Type":"2",
+                        "Min":"0",
+                        "Max":"100",
+                        "Visible":"false",
+                        "Access":"",
+                        "Text":"",
+                        "Id":"0",
+                        "Default":"0,3",
+                        "Key":"Q",
+                        "Name":"Коэффициент приёмки"
+                     }
+                  ],
+                  "Name":"Приемка '9 (ОС)'"
+               },
+               {
+                  "Id":"4",
+                  "Property":[
+                     {
+                        "Type":"2",
+                        "Min":"0",
+                        "Max":"100",
+                        "Visible":"false",
+                        "Access":"",
+                        "Text":"",
+                        "Id":"0",
+                        "Default":"0,5",
+                        "Key":"Q",
+                        "Name":"Коэффициент приёмки"
+                     }
+                  ],
+                  "Name":"Приемка '7' (ОСМ)"
+               },
+               {
+                  "Id":"3",
+                  "Property":[
+                     {
+                        "Type":"2",
+                        "Min":"0",
+                        "Max":"100",
+                        "Visible":"false",
+                        "Access":"",
+                        "Text":"",
+                        "Id":"0",
+                        "Default":"1",
+                        "Key":"Q",
+                        "Name":"Коэффициент приёмки"
+                     }
+                  ],
+                  "Name":"Приемка '5' (ОВП, ВП)"
+               },
+               {
+                  "Id":"2",
+                  "Property":[
+                     {
+                        "Type":"2",
+                        "Min":"0",
+                        "Max":"100",
+                        "Visible":"false",
+                        "Access":"",
+                        "Text":"",
+                        "Id":"0",
+                        "Default":"3",
+                        "Key":"Q",
+                        "Name":"Коэффициент приёмки"
+                     }
+                  ],
+                  "Name":"Приемка '3' (ОТК)"
+               },
+               {
+                  "Id":"1",
+                  "Property":[
+                     {
+                        "Type":"2",
+                        "Min":"0",
+                        "Max":"100",
+                        "Visible":"false",
+                        "Access":"",
+                        "Text":"",
+                        "Id":"0",
+                        "Default":"5",
+                        "Key":"Q",
+                        "Name":"Коэффициент приёмки"
+                     }
+                  ],
+                  "Name":"Приемка '1' (ОТК)"
+               },
+               {
+                  "Id":"0",
+                  "Property":[
+                     {
+                        "Type":"2",
+                        "Min":"0",
+                        "Max":"100",
+                        "Visible":"false",
+                        "Access":"",
+                        "Text":"",
+                        "Id":"0",
+                        "Default":"10",
+                        "Key":"Q",
+                        "Name":"Коэффициент приёмки"
+                     }
+                  ],
+                  "Name":"Неизвестно"
+               }
+            ],
+            "Type":"4",
+            "Min":"",
+            "Max":"",
+            "Visible":"true",
+            "Access":"",
+            "Text":"",
+            "Id":"10",
+            "Default":"0",
+            "Key":"",
+            "Name":"Тип приёмки"
+         },
+         {
+            "Type":"2",
+            "Min":"0",
+            "Max":"1000000000000",
+            "Visible":"true",
+            "Access":"Capacity",
+            "Text":"",
+            "Id":"9",
+            "Default":"5",
+            "Key":"C",
+            "Name":"Ёмкость конденсатора, пФ"
+         },
+         {
+            "Type":"2",
+            "Min":"0",
+            "Max":"1",
+            "Visible":"true",
+            "Access":"",
+            "Text":"",
+            "Id":"8",
+            "Default":"0,4",
+            "Key":"I",
+            "Name":"Коэффициент эл. нагрузки по напряжению"
+         },
+         {
+            "Type":"1",
+            "Min":"0,000001",
+            "Max":"10",
+            "Visible":"false",
+            "Access":"ConstH",
+            "Text":"",
+            "Id":"7",
+            "Default":"3",
+            "Key":"H",
+            "Name":"Значение константы H"
+         },
+         {
+            "Type":"2",
+            "Min":"0,000001",
+            "Max":"50",
+            "Visible":"false",
+            "Access":"ConstS",
+            "Text":"",
+            "Id":"6",
+            "Default":"0,4",
+            "Key":"S",
+            "Name":"Значение константы S"
+         },
+         {
+            "Type":"2",
+            "Min":"0,000001",
+            "Max":"50",
+            "Visible":"false",
+            "Access":"ConstG",
+            "Text":"",
+            "Id":"5",
+            "Default":"1",
+            "Key":"G",
+            "Name":"Значение константы G"
+         },
+         {
+            "Type":"1",
+            "Min":"1",
+            "Max":"1000",
+            "Visible":"false",
+            "Access":"ConstN",
+            "Text":"",
+            "Id":"4",
+            "Default":"358",
+            "Key":"N",
+            "Name":"Значение константы N"
+         },
+         {
+            "Type":"2",
+            "Min":"0,000001",
+            "Max":"50",
+            "Visible":"false",
+            "Access":"ConstB",
+            "Text":"",
+            "Id":"3",
+            "Default":"16",
+            "Key":"B",
+            "Name":"Значение константы B"
+         },
+         {
+            "Type":"2",
+            "Min":"0,000000000000001",
+            "Max":"50",
+            "Visible":"false",
+            "Access":"ConstA",
+            "Text":"",
+            "Id":"2",
+            "Default":"0,00000009885",
+            "Key":"A",
+            "Name":"Значение константы А"
+         },
+         {
+            "Type":"1",
+            "Min":"-100",
+            "Max":"1000",
+            "Visible":"true",
+            "Access":"",
+            "Text":"",
+            "Id":"1",
+            "Default":"25",
+            "Key":"Tn",
+            "Name":"Фактическая рабочая температура, C"
+         },
+         {
+            "Type":"2",
+            "Min":"0",
+            "Max":"1",
+            "Visible":"false",
+            "Access":"L",
+            "Text":"",
+            "Id":"0",
+            "Default":"0,00000004",
+            "Key":"L",
+            "Name":"Базовая интенсивность отказов, 1/ч"
+         }
+      ]
+   }
+}

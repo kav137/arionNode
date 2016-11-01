@@ -1,0 +1,216 @@
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td{
+	padding:0px;
+	margin:0px;
+}
+html{
+	min-width: 650px;
+	min-height: 500px;
+	/*overflow: auto;*/
+}
+html, body{
+	height: 100%;
+	padding:0px;
+	margin:0px;
+	position: relative;
+	font-family: arial;
+	font-variant: normal;
+	font-weight: normal;
+	font-style: normal;
+	/*background-color: #888888;*/
+	/*background-image: url("/images/texture.png")*/
+	background-color: #eeeeee;
+}
+
+a:-webkit-any-link {
+  color: auto;
+  text-decoration: none;
+  cursor: auto;
+  font: normal normal normal  Arial;
+}
+.fullHeight{
+	height: 100%;
+}
+.fullWidth{
+	width: 100%;
+}
+.halfWidth{
+	width: 50%;
+}
+.content{
+	position: relative;
+	margin: 10px 10px 0px 378px;
+	height: calc(100% - 75px);
+	min-height: 475px;
+}
+.contentColumn{
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	/*border: 1px solid red;*/
+}
+.contentPanel{
+	height: calc(50% - 24px);
+	padding: 12px 15px;
+	left: -20px;
+	border: 0px;
+	border-radius: 5px;
+	/*position: absolute;*/
+	box-shadow: -2px 0px 35px -10px rgba(0,0,0,0.5);
+	background-color: #FFFFFF;
+	overflow: auto;
+}
+#contentPanelDivider{
+	width: 100%;
+	height: 8px;
+	cursor: s-resize;
+	background: url(../images/divider.png) 50% 3px no-repeat; 
+}
+
+#outputPanel > div{
+	float: left;
+}
+/*editPanel properties*/
+#chartsPanel{
+	text-align: center;
+}
+.toggleButton{
+	height: 30px;
+	padding: 2px 9px;
+	font-size: 13px;
+	/*float: right;*/
+	background-color: #1D4E89;
+	color: white;
+	border: 0px;
+	outline: none;
+}
+
+.authForm{
+	width: 400px;
+	height: 250px;
+	padding-top: 50px;
+	padding-bottom: 100px;
+	position: relative;
+	border-radius: 50%;
+	margin: 100px auto auto auto;
+	background-color: #FFFFFF;
+	/*border: 2px solid #AAAAAA;*/
+	box-shadow: 0px 0px 100px;
+	/*padding: 30px;*/
+}
+
+.authFormWelcomeMessage {
+	margin-top: 50px;
+	color: #323232;
+	font-family: Helvetica Arial sans-serif;
+	font-weight: 600;
+	font-size: 16px
+}
+
+.authFornInput {
+
+}
+
+.alphaOverlay{
+	position: absolute;
+	top:0px;
+	width: 100%;
+	height:100%;
+	background-color: rgba(0,0,0,0.4);
+	z-index:10;
+}
+.modal{
+	margin: 80px auto;	
+	box-shadow: 0px 0px 100px;
+	/*padding: 30px;*/
+}
+.modalHeader{
+	height: 30px;
+	width: 100%;
+	position: relative;
+	background-color: #1D4E89;
+	color: white;
+	font-size: 18px;
+	text-align: center;
+	padding-top: 6px;
+	vertical-align: middle;
+}
+.closeModal{
+	margin-right: 10px;
+	float: right;
+}
+.addElementModal{
+	height: 330px;
+	width: 500px;
+	background-color: white
+}
+.addElementModalContent{
+	padding: 10px 30px 30px 30px;
+	font-size: 14px; 
+	font-weight: bold;
+}
+.addModuleModal{
+	height:200px;
+	width: 500px;
+	background-color: white;
+}
+.searchElementModal{
+	height: 200px;
+	width: 500px;
+	background-color: white;	
+}
+.searchElementModalContent{
+	padding: 10px 30px 30px 30px;
+	font-size: 14px; 
+	font-weight: bold;
+}
+.modalContentInput{
+	padding: 4px;
+}
+.editorContentInput{
+	padding: 2px;
+}
+.inputFullWidth{
+	width: 100%;
+}
+.centralModalButton{
+	height: 35px;
+	padding: 2px 9px;
+	font-size: 15px;
+	margin: 6px auto 3px auto;
+	background-color: #1D4E89;
+	color: white;
+	border: 0px;
+	outline: none;
+}
+.centralModalButton:active{
+	background-color: #173E6E;
+}
+.centralAlign{
+	text-align: center;
+}
+.italicText{
+	font-style: italic;
+}
+.editTable{
+    /*border: 1px solid black;*/
+    border-collapse: collapse;
+    margin:10px;
+}
+.editTable td {
+    padding:2px 5px;
+	border: 1px solid #c4c4c4;
+}
+.editTable td input{
+	border: 0px solid white;
+	height: 100%;
+}
+.editTable td select{
+	border: 0px solid white;
+	height: 100%;
+}
+.editTableCaption{
+	padding: 4px;
+}
+/*tr td {
+	border: 1px solid green;
+}*/

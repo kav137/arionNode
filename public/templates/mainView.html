@@ -1,0 +1,34 @@
+<div ng-controller="RootCtrl" class="fullHeight">
+
+	<div ng-include="'templates/header.html'" ng-show="authorization.success"></div>
+	<div ng-include="'templates/treePanel.html'" ng-show="authorization.success"></div>
+	<div id="content" class="content" ng-show="authorization.success">
+		<div class="contentColumn">
+			<div id="propertyPanel" class="contentPanel" ng-include="'templates/editPanel.html'" ></div>
+			<div id="contentPanelDivider" 
+				resizer="horizontal" 
+	  			resizer-height="8" 
+	  			resizer-top="#propertyPanel" 
+	  			resizer-bottom="#outputPanel">
+  			</div>
+			<div class="contentPanel" ng-include="'templates/outputPanel.html'"></div>
+		</div>
+	</div>
+
+
+	<div ng-show="modal.visible && authorization.success" ng-include="'templates/modal.html'"></div>
+
+	<div ng-show="!authorization.success" class="authForm" style="text-align:center">
+		<div class="authFormWelcomeMessage"> 
+			{{"Welcome" | translate}} 
+		</div>
+		<br>
+		<input type="text" ng-model="authorization.userName" placeholder="{{'Username' | translate }}" style="width:240px; margin:auto" />
+		<br>
+		<br>
+		<input type="text" ng-model="authorization.password" placeholder='{{"Password" |translate}}' style="width:240px; margin:auto" />
+		<br><br>
+		<button class="centralModalButton" ng-click="login()">{{"Log in" | translate}}</button>
+	</div>
+
+</div>	
