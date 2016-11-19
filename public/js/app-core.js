@@ -208,7 +208,7 @@ angular.module('app-core.service', [])
 			// /arion?cn=INDIFFERENT&gn=Слюдяные&mt=Отечественная методика
 			// do not escape characters
 			
-			var str = "\\arion\\arion?cn=" + element.group +
+			var str = "\\arion\\getElement?cn=" + element.group +
 					'&gn=' + element.subGroup + "&mt=" + element.owner;
 
 			// alertify.log("loading")
