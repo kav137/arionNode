@@ -10,24 +10,24 @@ let Strategy = require( "passport-local" ).Strategy;
 let usersDb = require( "./config/users" );
 
 passport.use( new Strategy(
-    ( username, password, cb ) => {
-        usersDb.findByUsername( username, ( err, user ) => {
-            if ( err ) { return cb( err ); }
-            if ( !user ) { return cb( null, false ); }
-            if ( user.password != password ) { return cb( null, false ); }
-            return cb( null, user );
-        });
-    }) );
+	( username, password, cb ) => {
+		usersDb.findByUsername( username, ( err, user ) => {
+			if ( err ) { return cb( err ); }
+			if ( !user ) { return cb( null, false ); }
+			if ( user.password != password ) { return cb( null, false ); }
+			return cb( null, user );
+		});
+	}) );
 
 passport.serializeUser(( user, cb ) => {
-    cb( null, user.id );
+	cb( null, user.id );
 });
 
 passport.deserializeUser(( id, cb ) => {
-    usersDb.findById( id, ( err, user ) => {
-        if ( err ) { return cb( err ); }
-        cb( null, user );
-    });
+	usersDb.findById( id, ( err, user ) => {
+		if ( err ) { return cb( err ); }
+		cb( null, user );
+	});
 });
 
 let middleware = require( "./app/index" );
@@ -52,23 +52,23 @@ app.use( require( 'express-session' )( { secret: 'keyboard cat', resave: false, 
 app.use( passport.initialize() );
 app.use( passport.session() );
 
-
+app.use( express.static( path.join( __dirname, 'public/css' ) ) );
 app.get( '/login', ( req, res ) => {
-    console.log( `1` );
-    res.render( 'login' );
+	// console.log( `1` );
+	res.render( 'login.jade' );
 });
 // app.get( "*", ( req, res ) => {
 //     res.redirect( "/login" );
 // })
 app.post( '/login',
-    passport.authenticate( 'local', { failureRedirect: '/login' }),
-    function ( req, res ) {
-        res.redirect( '/arion' );
-    });
+	passport.authenticate( 'local', { failureRedirect: '/login' }),
+	function ( req, res ) {
+		res.redirect( '/arion' );
+	});
 
 app.use( "/arion",
-    require( 'connect-ensure-login' ).ensureLoggedIn(),
-    express.static( path.join( __dirname, 'public/arion' ) )
+	require( 'connect-ensure-login' ).ensureLoggedIn(),
+	express.static( path.join( __dirname, 'public/arion' ) )
 );
 // app.use( "*", passport.authenticate( 'local', { failureRedirect: '/login' }) );
 // app.use( ( req, res ) => {
@@ -83,26 +83,27 @@ app.use( "/arion", require( 'connect-ensure-login' ).ensureLoggedIn(), getElemen
 
 // catch 404 and forward to error handler
 app.use( function ( req, res, next ) {
-    var err = new Error( 'Not Found' );
-    err.status = 404;
-    next( err );
+	res.redirect( "/login" );
+	var err = new Error( 'Not Found' );
+	err.status = 404;
+	next( err );
 });
 
 // error handler
 app.use( function ( err, req, res, next ) {
-    // set locals, only providing error in development
-    // res.locals.message = err.message;
-    // res.locals.error = req.app.get( 'env' ) === 'development' ? err : {};
+	// set locals, only providing error in development
+	// res.locals.message = err.message;
+	// res.locals.error = req.app.get( 'env' ) === 'development' ? err : {};
 
-    // render the error page
-    res.status( err.status || 404 );
-    res.render( 'error', {
-        message: err,
-        error: {
-            status: 403
+	// render the error page
+	res.status( err.status || 404 );
+	res.render( 'error', {
+		message: err,
+		error: {
+			status: 403
 
-        }
-    });
+		}
+	});
 });
 
 module.exports = app;

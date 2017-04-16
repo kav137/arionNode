@@ -1,0 +1,21 @@
+body {
+    background-color: white;
+    /*color: red;*/
+    /*flex-direction: column;
+    align-content: center;
+    */
+    padding-top: 100px;
+}
+
+form{
+    text-align: center;
+    background-color: white;
+    /*border: 1px solid grey;*/
+    width: 200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+form div {
+    margin:  5px;
+}

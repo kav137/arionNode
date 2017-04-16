@@ -1,0 +1,13 @@
+body {
+    background-color: lightgrey;
+    color: red;
+    flex-direction: column;
+    align-content: center;
+    
+}
+
+form{
+    background-color: white;
+    border: 1px solid grey;
+
+}

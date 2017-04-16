@@ -1,25 +1,25 @@
 
-angular.module('app-math', ['app-core'])
-	.service('mathService', function(){
+angular.module( 'app-math', [ 'app-core' ] )
+	.service( 'mathService', function () {
 		var MS = this;
 
-		this.calculate = function (expression, data){
+		this.calculate = function ( expression, data ) {
 			// // console.clear();
 			// // console.log('calculate starts, input expression : %s', expression);
-			checkSafety(expression);
-			checkBrackets(expression);
-			expression = replaceCommas(expression)
-			expression = replaceOperations(expression);
-			expression = replaceVariables(expression, data);
+			checkSafety( expression );
+			checkBrackets( expression );
+			expression = replaceCommas( expression )
+			expression = replaceOperations( expression );
+			expression = replaceVariables( expression, data );
 			// // console.log("START CALCULATION")
-			var result = initCalculation(expression, data);
+			var result = initCalculation( expression, data );
 			return result;
 		}
 
-		var checkBrackets = function (expression){
+		var checkBrackets = function ( expression ) {
 			var counter = 0;
-			for (var i = 0; i < expression.length; i++){
-				switch (expression[i]){
+			for ( var i = 0; i < expression.length; i++ ) {
+				switch ( expression[ i ] ) {
 					case '(':
 						counter++;
 						break;
@@ -27,49 +27,49 @@ angular.module('app-math', ['app-core'])
 						counter--;
 						break;
 				}
-				if (counter < 0){
+				if ( counter < 0 ) {
 					throw "A01::mathService.checkBrackets: incorrect expression. excess closing bracket"
 				}
 			}
-			if (counter != 0){
+			if ( counter != 0 ) {
 				throw "A01::mathService.checkBrackets: incorrect expression. excess opening bracket"
 			}
 			// // console.log('checkBrackets success')
 		}
 
-		var checkSafety = function (expression){
-			var reservedWords = ['=', ' ', ';', 'break', 'case', 'constructor', 'delete', 'do', 'else', 'eval', 'finally', 'for',
-				'function', 'goto', 'if', 'return', 'prototype', 'try', 'var', 'while'];
-			angular.forEach(reservedWords, function (word){
-				if(expression.indexOf(word) != -1){
+		var checkSafety = function ( expression ) {
+			var reservedWords = [ '=', ' ', ';', 'break', 'case', 'constructor', 'delete', 'do', 'else', 'eval', 'finally', 'for',
+				'function', 'goto', 'if', 'return', 'prototype', 'try', 'var', 'while' ];
+			angular.forEach( reservedWords, function ( word ) {
+				if ( expression.indexOf( word ) != -1 ) {
 					throw "A01::mathService.checkSafety: unsafe expression to be evaluated"
 				}
 			})
 			// // console.log('checkSafety success')
 		}
 
-		var replaceCommas = function (expression){
-			while (expression.indexOf(',') > -1){
-				expression = expression.replace(',', '.');
+		var replaceCommas = function ( expression ) {
+			while ( expression.indexOf( ',' ) > -1 ) {
+				expression = expression.replace( ',', '.' );
 			}
 			// // console.log('replaceCommas success. out expression: %s', expression);
 			return expression;
 		}
 
-		var replaceVariables = function (expression, data){
-			angular.forEach(data, function (value, key){
-				var replaceThis = new RegExp('(?:\\+|\\-|\\/|\\*|\\(|\\^|^)('+ key +')(?:\\+|\\-|\\/|\\*|\\)|\\^|$)');
+		var replaceVariables = function ( expression, data ) {
+			angular.forEach( data, function ( value, key ) {
+				var replaceThis = new RegExp( '(?:\\+|\\-|\\/|\\*|\\(|\\^|^)(' + key + ')(?:\\+|\\-|\\/|\\*|\\)|\\^|$)' );
 				var matchArray;
-				while (matchArray = replaceThis.exec(expression)){
+				while ( matchArray = replaceThis.exec( expression ) ) {
 					var beginSubIndex;
-					if (expression.charAt(matchArray.index) != matchArray[1].charAt(0)){
+					if ( expression.charAt( matchArray.index ) != matchArray[ 1 ].charAt( 0 ) ) {
 						beginSubIndex = matchArray.index + 1;
 					}
-					else{
+					else {
 						beginSubIndex = matchArray.index;
 					}
-					var begin = expression.substring(0, beginSubIndex);
-					var end = expression.substring(beginSubIndex)
+					var begin = expression.substring( 0, beginSubIndex );
+					var end = expression.substring( beginSubIndex )
 					expression = begin + "data." + end;
 				}
 			})
@@ -77,112 +77,112 @@ angular.module('app-math', ['app-core'])
 			return expression;
 		}
 
-		var replaceOperations = function (expression) {
-			expression = replaceLn(expression);
-			expression = replaceExp(expression);
+		var replaceOperations = function ( expression ) {
+			expression = replaceLn( expression );
+			expression = replaceExp( expression );
 			// // console.log('replaceOperations success. out expression: %s', expression);
 			return expression;
 		}
 
-		var replaceLn = function (expression) {
-			while (expression.indexOf('ln') > -1){
-				expression = expression.replace('ln', 'Math.log');
+		var replaceLn = function ( expression ) {
+			while ( expression.indexOf( 'ln' ) > -1 ) {
+				expression = expression.replace( 'ln', 'Math.log' );
 			}
 			return expression;
 		}
 
-		var replaceExp = function (expression) {
-			while (expression.indexOf('exp') > -1){
+		var replaceExp = function ( expression ) {
+			while ( expression.indexOf( 'exp' ) > -1 ) {
 				//dirty hack, but it works faster than nested checks'n'loops or regexps.
-				expression = expression.replace('exp', 'Math.toReplace');
+				expression = expression.replace( 'exp', 'Math.toReplace' );
 			}
-			while (expression.indexOf('toReplace') > -1){
-				expression = expression.replace('toReplace', 'exp');
+			while ( expression.indexOf( 'toReplace' ) > -1 ) {
+				expression = expression.replace( 'toReplace', 'exp' );
 			}
 			return expression;
 		}
 
-		var replacePower = function (expression, data){
+		var replacePower = function ( expression, data ) {
 			// // console.log("innerExpression : %s", expression)
-			while(expression.indexOf('^') != -1){
-				var template = expression.match("((?:\\(?-?([0-9]+([\.][0-9]+)?e\-?[0-9]+)\\)?|\\(?-?[0-9]+[\\.]{0,1}(?:[0-9]*)\\)?|\\(?-?[a-zA-Z0-9\\.]+\\)?)(\\^)(?:\\(?-?([0-9]+([\.][0-9]+)?e\-?[0-9]+)\\)?|\\(?-?[0-9]+[\\.]{0,1}(?:[0-9]*)\\)?|\\(?-?[a-zA-Z0-9\\.]+\\)?))");
+			while ( expression.indexOf( '^' ) != -1 ) {
+				var template = expression.match( "((?:\\(?-?([0-9]+([\.][0-9]+)?e\-?[0-9]+)\\)?|\\(?-?[0-9]+[\\.]{0,1}(?:[0-9]*)\\)?|\\(?-?[a-zA-Z0-9\\.]+\\)?)(\\^)(?:\\(?-?([0-9]+([\.][0-9]+)?e\-?[0-9]+)\\)?|\\(?-?[0-9]+[\\.]{0,1}(?:[0-9]*)\\)?|\\(?-?[a-zA-Z0-9\\.]+\\)?))" );
 				// // console.log('replacePower match result : ', template)
-				try{   
-					checkBrackets(template[0]);
+				try {
+					checkBrackets( template[ 0 ] );
 				}
-				catch(err){
+				catch ( err ) {
 					//handling '(xxx^xxx' case
-					if(err == "A01::mathService.checkBrackets: incorrect expression. excess opening bracket"){
-						var trimmed = removeOpenBracket(template[0]);
-						var replacement = trimmed.split('^');
-						var powerStr = "Math.pow(" + replacement[0] + "," + replacement[1] + ")";
-						var result = eval(powerStr);
-						expression = expression.substring(0, template.index) +
+					if ( err == "A01::mathService.checkBrackets: incorrect expression. excess opening bracket" ) {
+						var trimmed = removeOpenBracket( template[ 0 ] );
+						var replacement = trimmed.split( '^' );
+						var powerStr = "Math.pow(" + replacement[ 0 ] + "," + replacement[ 1 ] + ")";
+						var result = eval( powerStr );
+						expression = expression.substring( 0, template.index ) +
 							"(" + result +
-							expression.substring(template.index + template[0].length);
+							expression.substring( template.index + template[ 0 ].length );
 						// // console.log('power execution result: %s', expression);
 						continue;
 					}
 					//handling 'xxx^xxx)' case
-					if(err == "A01::mathService.checkBrackets: incorrect expression. excess closing bracket"){
-						var trimmed = removeCloseBracket(template[0]);
-						var replacement = trimmed.split('^');
-						var powerStr = "Math.pow(" + replacement[0] + "," + replacement[1] + ")";
-						var result = eval(powerStr);
-						expression = expression.substring(0, template.index) +
+					if ( err == "A01::mathService.checkBrackets: incorrect expression. excess closing bracket" ) {
+						var trimmed = removeCloseBracket( template[ 0 ] );
+						var replacement = trimmed.split( '^' );
+						var powerStr = "Math.pow(" + replacement[ 0 ] + "," + replacement[ 1 ] + ")";
+						var result = eval( powerStr );
+						expression = expression.substring( 0, template.index ) +
 							result + ")" +
-							expression.substring(template.index + template[0].length);
+							expression.substring( template.index + template[ 0 ].length );
 						// // console.log('power execution result: %s', expression);
 						continue;
 					}
 				}
 				//handling '(xxxx^xxxx)' case
-				if (template[0].indexOf('(') == 0 && template[0].indexOf(')') == template[0].length-1
-					&& template[0].indexOf('(', 1) == -1){
-					var replacement = (template[0].substring(1, template[0].length-1)).split('^');
+				if ( template[ 0 ].indexOf( '(' ) == 0 && template[ 0 ].indexOf( ')' ) == template[ 0 ].length - 1
+					&& template[ 0 ].indexOf( '(', 1 ) == -1 ) {
+					var replacement = ( template[ 0 ].substring( 1, template[ 0 ].length - 1 ) ).split( '^' );
 				}
 				//handling 'xxxx^xxxx' case
-				else{
-					var replacement = template[0].split('^');
+				else {
+					var replacement = template[ 0 ].split( '^' );
 				}
-				var powerStr = "Math.pow(" + replacement[0] + "," + replacement[1] + ")";
-				var result = eval(powerStr);
-				expression = expression.substring(0, template.index) +
+				var powerStr = "Math.pow(" + replacement[ 0 ] + "," + replacement[ 1 ] + ")";
+				var result = eval( powerStr );
+				expression = expression.substring( 0, template.index ) +
 					"(" + result + ")" +
-					expression.substring(template.index + template[0].length);
+					expression.substring( template.index + template[ 0 ].length );
 				// // console.log('power execution result: %s', expression)
 			}
 			return expression;
 		}
 
-		var removeOpenBracket = function (expression){
+		var removeOpenBracket = function ( expression ) {
 			var openBracketPos = -1;
 			var isClosed = true;
-			for (var i = 0; i < expression.length; i++){
-				if (expression[i] == '('){
+			for ( var i = 0; i < expression.length; i++ ) {
+				if ( expression[ i ] == '(' ) {
 					openBracketPos = i;
 					isClosed = false;
 				}
-				if (expression[i] == ')'){
+				if ( expression[ i ] == ')' ) {
 					isClosed = true;
 				}
 			}
-			if (isClosed == false){
-				expression = expression.substring(0, openBracketPos) + 
-					expression.substring(openBracketPos + 1, expression.length);
+			if ( isClosed == false ) {
+				expression = expression.substring( 0, openBracketPos ) +
+					expression.substring( openBracketPos + 1, expression.length );
 			}
 			return expression;
 		}
 
-		var removeCloseBracket = function (expression){
+		var removeCloseBracket = function ( expression ) {
 			var closeBracketPos = -1;
 			var isOpen = false;
-			for (var i = 0; i < expression.length; i++){
-				if (expression[i] == '('){
+			for ( var i = 0; i < expression.length; i++ ) {
+				if ( expression[ i ] == '(' ) {
 					isOpen = true;
 				}
-				if (expression[i] == ')'){
-					if (isOpen){
+				if ( expression[ i ] == ')' ) {
+					if ( isOpen ) {
 						isOpen = false;
 					}
 					else {
@@ -190,136 +190,138 @@ angular.module('app-math', ['app-core'])
 					}
 				}
 			}
-			if (closeBracketPos != -1){
-				expression = expression.substring(0, closeBracketPos) + 
-					expression.substring(closeBracketPos + 1, expression.length);
+			if ( closeBracketPos != -1 ) {
+				expression = expression.substring( 0, closeBracketPos ) +
+					expression.substring( closeBracketPos + 1, expression.length );
 				// // console.log('trimmed (close removed): %s', expression)
 			}
 			return expression;
 		}
 
-		var initCalculation = function (expression, data){
+		var initCalculation = function ( expression, data ) {
 			var openBracketPos = 0;
 			var isClosed = true;
 			var lnPre = false;
 			var expPre = false;
-			for (var i = 0; i < expression.length; i++){
+			for ( var i = 0; i < expression.length; i++ ) {
 				//if there are brackets to get in
-				if (expression.indexOf('(') > -1){
-					if (expression[i] == '('){
+				if ( expression.indexOf( '(' ) > -1 ) {
+					if ( expression[ i ] == '(' ) {
 						openBracketPos = i;
 						isClosed = false;
 						continue;
 					}
 					//handle the most nested expression
-					if (expression[i] == ')' && !isClosed){
+					if ( expression[ i ] == ')' && !isClosed ) {
 						// // console.log("####################")
 						// // console.log('init expression: %s', expression)
-						var innerExpression = expression.substring(openBracketPos, i+1);
+						var innerExpression = expression.substring( openBracketPos, i + 1 );
 						// // console.log("inner part : %s", innerExpression);
-						if (i > 2 && expression.substring(0, openBracketPos).lastIndexOf('log') != -1 &&
-								expression.substring(0, openBracketPos).lastIndexOf('log') == 
-								expression.substring(0, openBracketPos).length-3 ){
+						if ( i > 2 && expression.substring( 0, openBracketPos ).lastIndexOf( 'log' ) != -1 &&
+							expression.substring( 0, openBracketPos ).lastIndexOf( 'log' ) ==
+							expression.substring( 0, openBracketPos ).length - 3 ) {
 							lnPre = true;
 						}
-						if (i > 2 && expression.substring(0, openBracketPos).lastIndexOf('exp') != -1 &&
-								expression.substring(0, openBracketPos).lastIndexOf('exp') == 
-								expression.substring(0, openBracketPos).length-3){
+						if ( i > 2 && expression.substring( 0, openBracketPos ).lastIndexOf( 'exp' ) != -1 &&
+							expression.substring( 0, openBracketPos ).lastIndexOf( 'exp' ) ==
+							expression.substring( 0, openBracketPos ).length - 3 ) {
 							expPre = true;
 						}
-						if (innerExpression.indexOf('^') > -1){
-							innerExpression = replacePower(innerExpression, data);
+						if ( innerExpression.indexOf( '^' ) > -1 ) {
+							innerExpression = replacePower( innerExpression, data );
 						}
-						if(lnPre){
+						if ( lnPre ) {
 							innerExpression = "Math.log(" + innerExpression + ")";
-							var replacement = eval(innerExpression);
-							var temp = expression.substring(0, openBracketPos-8) 
-										+ replacement 
-										+ expression.substring(i+1);
+							var replacement = eval( innerExpression );
+							var temp = expression.substring( 0, openBracketPos - 8 )
+								+ replacement
+								+ expression.substring( i + 1 );
 						}
-						if(expPre){
+						if ( expPre ) {
 							innerExpression = "Math.exp(" + innerExpression + ")";
-							var replacement = eval(innerExpression);
-							var temp = expression.substring(0, openBracketPos-8) 
-										+ replacement 
-										+ expression.substring(i+1);
+							var replacement = eval( innerExpression );
+							var temp = expression.substring( 0, openBracketPos - 8 )
+								+ replacement
+								+ expression.substring( i + 1 );
 						}
-						if(!expPre && !lnPre){
-							var replacement = eval(innerExpression);
-							var temp = expression.substring(0, openBracketPos) 
-										+ replacement 
-										+ expression.substring(i+1);
+						if ( !expPre && !lnPre ) {
+							var replacement = eval( innerExpression );
+							var temp = expression.substring( 0, openBracketPos )
+								+ replacement
+								+ expression.substring( i + 1 );
 						}
 						// // console.log('result: %s', temp)
 						expression = temp;
-						if (Number.parseFloat(expression) !== NaN)
+						if ( Number.parseFloat( expression ) !== NaN )
 							i = -1;
 						isClosed = true;
 						lnPre = false
 						expPre = false;
 					}
 				}
-				else{
-					if(expression.indexOf('^') > -1){
-						expression = replacePower(expression, data);
+				else {
+					if ( expression.indexOf( '^' ) > -1 ) {
+						expression = replacePower( expression, data );
 					}
-					var res = eval(expression)
+					var res = eval( expression )
 					// // console.log('final result: %f', res)
 					return res;
 				}
 			}
 		}
 	})
-	.service('calculateService', ['mathService', function (mathService){
-		this.initKeys = function(element){
+	.service( 'calculateService', [ 'mathService', function ( mathService ) {
+		this.initKeys = function ( element ) {
 			var array = element.properties;
-			return getValues(array);
+			return getValues( array );
 		}
 
 		//output [{"key" : "A", value: 123}, ...]
-		var getValues = (array) => {
-			return _.flattenDeep(array.reduce((acc, p) => {
-				return acc.concat(getPropertyValue(p));
-			}, []));
+		var getValues = ( array ) => {
+			return _.flattenDeep( array.reduce(( acc, p ) => {
+				return acc.concat( getPropertyValue( p ) );
+			}, [] ) );
 		}
 
-		var getPropertyValue = (p) => {
-			if (p.Type === undefined || p.Type == 1 || p.Type == 2){ //non-strict equality caused by type differences
-				/*debug*/ if (!p.Key || p.value === undefined) throw `getPropertyValue error : ${p}`;
-				return getSimplePropertyValue(p);
+		var getPropertyValue = ( p ) => {
+			if ( p.Type === undefined || p.Type == 1 || p.Type == 2 ) { //non-strict equality caused by type differences
+				/*debug*/ if ( !p.Key || p.value === undefined ) {
+					throw `getPropertyValue error : ${p}`;
+				}
+				return getSimplePropertyValue( p );
 			}
-			if (p.Type == 4){
-				return getComplexPropertyValue(p);
+			if ( p.Type == 4 ) {
+				return getComplexPropertyValue( p );
 			}
 		}
 
-		var getSimplePropertyValue = (p) => {
+		var getSimplePropertyValue = ( p ) => {
 			return {
-				"key" : p.Key,
-				"value" : stringToNumber(p.value)
+				"key": p.Key,
+				"value": stringToNumber( p.value )
 			};
 		}
 
-		var getComplexPropertyValue = (p) => {
-			if (p.value.Property && angular.isArray(p.value.Property)){
-				if(p.value.Property.length === 1){
-					return getPropertyValue(p.value.Property[0]);	
+		var getComplexPropertyValue = ( p ) => {
+			if ( p.value.Property && angular.isArray( p.value.Property ) ) {
+				if ( p.value.Property.length === 1 ) {
+					return getPropertyValue( p.value.Property[ 0 ] );
 				}
 				else {
 					// (!) do not use if-else 'cause thy are doing the same thing
-					return p.value.Property.map(getPropertyValue);
+					return p.value.Property.map( getPropertyValue );
 					// throw `initComplexProperty :: property.value.Property.length !== 1. Name : ${p.value.Name}`;
 				}
 			}
-			if (p.value.Key && angular.isArray(p.value.Key)){
-				console.log(p.Name);
-				return p.value.Key.map(getPropertyValue);
+			if ( p.value.Key && angular.isArray( p.value.Key ) ) {
+				console.log( p.Name );
+				return p.value.Key.map( getPropertyValue );
 			}
 		}
 
-		var stringToNumber = (str) => {
-			var ret = parseFloat(str.replace(',', '.'));
-			/*debug*/ Number.isFinite(ret)? 0 : console.error(`stringToNumber :: wrong result : ${ret}`);
+		var stringToNumber = ( str ) => {
+			var ret = parseFloat( str.replace( ',', '.' ) );
+			/*debug*/ Number.isFinite( ret ) ? 0 : console.error( `stringToNumber :: wrong result : ${ret}` );
 			return ret;
 		}
 
@@ -392,7 +394,7 @@ angular.module('app-math', ['app-core'])
 		// 	return keys;
 		// }
 
-		this.calculateCoefficients = function (element, keysArray){
+		this.calculateCoefficients = function ( element, keysArray ) {
 			// angular.forEach(element.coefficients, function (coef){
 			// 	angular.forEach(keysArray, function (item){
 			// 		varObj[item.key] = item.value;
@@ -400,56 +402,56 @@ angular.module('app-math', ['app-core'])
 
 			// 	coef.value = mathService.calculate(coef.Default, varObj);
 			// })
-			
-			var varObj = keysArray.reduce((acc, item) => {
-				acc[item.key] = item.value;
+
+			var varObj = keysArray.reduce(( acc, item ) => {
+				acc[ item.key ] = item.value;
 				return acc;
 			}, {});
 
 			//some coefs require other coefs for calculation
 			var i = 0;
 			var calculatedCoefficientsKeys = [];
-			while (calculatedCoefficientsKeys.length != element.coefficients.length){
-				i = (i >= element.coefficients.length )? 0 : i; //counter reset
+			while ( calculatedCoefficientsKeys.length != element.coefficients.length ) {
+				i = ( i >= element.coefficients.length ) ? 0 : i; //counter reset
 				// don't allow to calculate the same thing twice
-				if (calculatedCoefficientsKeys.some((key) =>{
-					return key === element.coefficients[i].Key;
-				})){
+				if ( calculatedCoefficientsKeys.some(( key ) => {
+					return key === element.coefficients[ i ].Key;
+				}) ) {
 					i++;
-					continue; 
+					continue;
 				}
 
-				var val; 
+				var val;
 				try { //if it is not possible to calcualte the value...
-					val = mathService.calculate(element.coefficients[i].Default, varObj);
+					val = mathService.calculate( element.coefficients[ i ].Default, varObj );
 				}
-				catch (e) { //...skip this one and try to caluclate another one
+				catch ( e ) { //...skip this one and try to caluclate another one
 					i++;
 					continue;
 				}
 				// otherwise share the result of calculation with other coefs
-				varObj[element.coefficients[i].Key] = val;
-				element.coefficients[i].value = val;
-				calculatedCoefficientsKeys.push(element.coefficients[i].Key);
+				varObj[ element.coefficients[ i ].Key ] = val;
+				element.coefficients[ i ].value = val;
+				calculatedCoefficientsKeys.push( element.coefficients[ i ].Key );
 				i++;
 			}
 			return varObj;
 		}
-		
-		this.extendVarObjWithCoefs = function (element, varObj){
-			angular.forEach(element.coefficients, function (item){
-				varObj[item.Key] = item.value;
+
+		this.extendVarObjWithCoefs = function ( element, varObj ) {
+			angular.forEach( element.coefficients, function ( item ) {
+				varObj[ item.Key ] = item.value;
 			})
 			return varObj;
-		}	
+		}
 
-		this.calculateModel = function (element, varObj){
-			element.modelValue = mathService.calculate(element.method, varObj);
+		this.calculateModel = function ( element, varObj ) {
+			element.modelValue = mathService.calculate( element.method, varObj );
 			// $scope.coefficients = varObj;
 		}
-	}])
-	.run(['$log' , function($log){
-		$log.info('app-math initialized successfully');
-	}])
- 
+	}] )
+	.run( [ '$log', function ( $log ) {
+		$log.info( 'app-math initialized successfully' );
+	}] )
+
 

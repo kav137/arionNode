@@ -2,11 +2,12 @@ extends layout
 
 block content
   form(action="/login", method="post")
+    //- h2 Welcome
     div
-      label username
+      label Username :
       input(type="text", name="username")
     div
-      label password
+      label Password : 
       input(type="password", name="password")
     div
       input(type="submit", value="Submit")
