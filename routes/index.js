@@ -1,9 +1,23 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const ensureLogin = require('connect-ensure-login');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+const loginRouter = require('./login.js');
+const logoutRouter = require('./logout.js');
+const apiRouter = require('./api');
+const arionRouter = require('./arion');
 
-module.exports = router;
+
+const publicRouter = express.Router();
+const secureRouter = express.Router();
+const appRouter = express.Router();
+
+publicRouter.use(loginRouter);
+secureRouter.use(apiRouter);
+secureRouter.use(arionRouter);
+secureRouter.use(logoutRouter);
+
+appRouter.use(publicRouter);
+appRouter.use(ensureLogin.ensureLoggedIn(), secureRouter);
+
+module.exports = appRouter;
+

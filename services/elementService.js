@@ -1,15 +1,34 @@
-'use strict';
+let database = require('./databaseService');
 
-let db = require('./connect');
+function prettifyElementInfo(dataset) {
+	let prettified = {
+		data: {
+			coefficients: [],
+			properties: [],
+			method: null
+		}
+	};
 
+	dataset.forEach((item) => {
+		if (item.Koefficient) {
+			prettified.data.method = item.Name;
+			prettified.data.coefficients = item.Koefficient;
+		} else {
+			prettified.data.properties.push(item);
+		}
+	});
 
-let getAllNodesOutcomingOfId = ({ id, arr }) => {
+	dataset.length = 0;
+	return prettified;
+}
+
+function getAllNodesOutcomingOfId({ id, arr }) {
 	console.log(`getAllNodesOutcomingOfId( id : ${id} )`);
 	const query = `start n=node(${id}) match path=n-[]->res return res`;
 	// let outNode = {};
 
 	let resultPromise = new Promise((resolve, reject) => {
-		db.cypherQuery(query, (err, result) => {
+		database.cypherQuery(query, (err, result) => {
 			if (err) {
 				console.log(`error : ${query}`);
 				reject();
@@ -22,7 +41,7 @@ let getAllNodesOutcomingOfId = ({ id, arr }) => {
 				arr.push(dataItem);
 				arrayOfPromises.push(
 					(new Promise((resolve, reject) => {
-						db.readLabels(dataItem._id, (err, result) => {
+						database.readLabels(dataItem._id, (err, result) => {
 							if (err) {
 								console.log(`readLabels error. id : ${id}`);
 								reject();
@@ -58,11 +77,11 @@ let getAllNodesOutcomingOfId = ({ id, arr }) => {
 	});
 
 	return resultPromise.then(() => arr);
-};
+}
 
-let getLabelByNodeId = (id) => {
+function getLabelByNodeId(id) {
 	return new Promise((resolve, reject) => {
-		db.readLabels(id, (err, result) => {
+		database.readLabels(id, (err, result) => {
 			if (err) {
 				console.log(`readLabels error. id : ${id}`);
 				reject();
@@ -70,24 +89,10 @@ let getLabelByNodeId = (id) => {
 			resolve(result[0]);
 		});
 	});
+}
+
+module.exports = {
+	prettifyElementInfo,
+	getAllNodesOutcomingOfId,
+	getLabelByNodeId
 };
-
-
-// ( result ) => {
-//     const query = `start n=node(${result}) match path=n-[]->res return res`;
-//     return new Promise(( resolve, reject ) => {
-//         db.cypherQuery( query, ( err, result ) => {
-//             if ( err ) {
-//                 reject();
-//             }
-//             if ( result.data.length ) {
-//                 resolve( result.data );
-//             }
-//             else {
-//                 console.log( "failed while params by id" );
-//                 reject();
-//             }
-//         })
-//     })
-// }
-module.exports = getAllNodesOutcomingOfId;

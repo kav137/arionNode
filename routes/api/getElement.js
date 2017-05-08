@@ -1,25 +1,17 @@
-'use strict';
-
 let express = require('express');
-let bodyParser = require('body-parser');
-let db = require('./connect');
-let getAllNodesOutcomingOfId = require('./getAllNodesOutcomingOfId');
-let prettifyElementInfo = require('../utils/prettifyElementInfo');
 let router = express.Router();
 
+let database = require('../../services').database;
 
-router.use(bodyParser.json());
-
-router.get('/getElement', (req, res, next) => {
-	req;
-	let className = req.query.cn;
+router.get('/', (req, res, next) => {
+	// let className = req.query.cn;
 	let groupName = req.query.gn;
-	let methodName = req.query.mt;
+	// let methodName = req.query.mt;
 
 	// getIdByGroupName
 	(new Promise((resolve, reject) => {
 		const coefficientQuery = `match (n:Group) where n.Name = '${groupName}' return id(n)`;
-		db.cypherQuery(coefficientQuery, (err, result) => {
+		database.cypherQuery(coefficientQuery, (err, result) => {
 			if (err) {
 				reject();
 			}
@@ -33,7 +25,6 @@ router.get('/getElement', (req, res, next) => {
 			}
 		});
 	}))
-		// getAllNodesOutcomingOfId
 		.then(getAllNodesOutcomingOfId)
 		.then(prettifyElementInfo)
 		.then((result) => {

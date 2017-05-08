@@ -1,18 +1,18 @@
-"use strict";
+'use strict';
 
-let express = require( "express" );
+let express = require('express');
 let router = express.Router();
-let db = require( "./connect" );
+let db = require('./connect');
 
 const methods = {
-	native : "Отечественные компоненты",
-	foreign : "Зарубежные компоненты"
-}
+	native: 'Отечественные компоненты',
+	foreign: 'Зарубежные компоненты'
+};
 
-router.get( "/getInfo", ( req, res, next ) => {
-	db.cypherQuery("match (n:Class) return n", (classErr, classResult) => {
+router.get('/getInfo', (req, res, next) => {
+	db.cypherQuery('match (n:Class) return n', (classErr, classResult) => {
 		if (classErr) {
-			console.log("err while retrieving classes from db");
+			console.log('err while retrieving classes from db');
 			res.status(500);
 		}
 
@@ -24,16 +24,16 @@ router.get( "/getInfo", ( req, res, next ) => {
 						reject();
 					}
 					let retObject = {
-						groups : [],
-						className : [classItem.Name]
-					}
+						groups: [],
+						className: [classItem.Name]
+					};
 					retObject.groups.push({
 						native: [
 							{
-								groupName : groupResult.data.map((item) => item.Name)
+								groupName: groupResult.data.map((item) => item.Name)
 							}
 						]
-					}) 
+					});
 					resolve(retObject);
 				});
 			}).then((result) => {
@@ -45,7 +45,7 @@ router.get( "/getInfo", ( req, res, next ) => {
 						}
 						result.groups[0].foreign = [
 							{
-								groupName : groupResult.data.map((item) => item.Name)
+								groupName: groupResult.data.map((item) => item.Name)
 							}
 						];
 						resolve(result);
@@ -55,11 +55,10 @@ router.get( "/getInfo", ( req, res, next ) => {
 		});
 
 		Promise.all(promiseArray).then((result) => {
-			res.json({data : result});
-		});	
-
-	})
-} )
+			res.json({ data: result });
+		});
+	});
+});
 
 
 module.exports = router;
