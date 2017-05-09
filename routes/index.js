@@ -12,7 +12,7 @@ const secureRouter = express.Router();
 const appRouter = express.Router();
 
 publicRouter.use(loginRouter);
-secureRouter.use(apiRouter);
+secureRouter.use('/api', apiRouter);
 secureRouter.use(arionRouter);
 secureRouter.use(logoutRouter);
 

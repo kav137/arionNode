@@ -3,7 +3,8 @@ let router = express.Router();
 
 let database = require('../../services').database;
 
-router.get('/', (req, res, next) => {
+router.get('/getElement', (req, res, next) => {
+	console.log('>>> get element route')
 	// let className = req.query.cn;
 	let groupName = req.query.gn;
 	// let methodName = req.query.mt;
