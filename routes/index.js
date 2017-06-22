@@ -19,5 +19,6 @@ secureRouter.use(logoutRouter);
 appRouter.use(publicRouter);
 appRouter.use(ensureLogin.ensureLoggedIn(), secureRouter);
 
+
 module.exports = appRouter;
 

@@ -20,9 +20,6 @@ function configureApp(app) {
 	app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 	app.use(passport.initialize());
 	app.use(passport.session());
-
-	app.use(express.static(path.join(__dirname, '../public/css')));
-	app.use(express.static(path.join(__dirname, '../public')));
 }
 
 module.exports = {

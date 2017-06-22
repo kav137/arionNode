@@ -44,9 +44,17 @@ angular.module('app-editor.controller', ['app-core'])
 					}
 					// (!!!) TODO: refactor this block 'cause varObj doesn't require extension
 					var varObj = calculateService.calculateCoefficients(element, keysArray);
+					var test1 = JSON.stringify(varObj)
 					var coefficientsOut = calculateService.extendVarObjWithCoefs(element, varObj); //not required anymore
+					var test1 = JSON.stringify(coefficientsOut);
 					calculateService.calculateModel(element, coefficientsOut);
 					$scope.coefficients = coefficientsOut;
+					console.log(11111111111111111111111111111111111111111111111)
+					console.log('varObj');
+					console.log(test1)
+					console.log('coefs')
+					console.log(coefficientsOut)
+					console.log(element);
 				}
 				catch (error) {
 					alertify.error(error.message);

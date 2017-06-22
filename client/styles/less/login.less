@@ -1,0 +1,33 @@
+@import "variables.less";
+
+html {
+	height: 100%;
+
+	> body {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		font-family: @font-arion;
+		color: @color-font;
+		background-color: @color-neutral;
+		height: 100%;
+
+		> form {
+			min-width: 250px;
+			max-width: 400px;
+
+			> div {
+				padding: 10px;
+
+				> input {
+					border: 0 solid @color-carbon;
+					border-bottom-width: 1px;
+					background-color: transparent;
+				}
+			}
+
+		}
+	}
+}
+

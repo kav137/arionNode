@@ -2,14 +2,15 @@
 angular.module('app-math', ['app-core'])
 	.service('mathService', function() {
 		this.calculate = function(expression, data) {
-			// // console.clear();
-			// // console.log('calculate starts, input expreson : %s', expression);
+			// console.clear();
+			console.log('calculate starts, input expreson : %s', expression);
+			console.log(data);
 			checkSafety(expression);
 			checkBrackets(expression);
 			expression = replaceCommas(expression);
 			expression = replaceOperations(expression);
 			expression = replaceVariables(expression, data);
-			// // console.log("START CALCULATION")
+			console.log("START CALCULATION")
 			let result = initCalculation(expression, data);
 			return result;
 		};
@@ -291,10 +292,14 @@ angular.module('app-math', ['app-core'])
 		};
 
 		var getSimplePropertyValue = (p) => {
-			return {
+			var val = {
 				'key': p.Key,
 				'value': stringToNumber(p.value),
+				'name': p.Name || p.name,
+				'model': p.model
 			};
+			console.log(val)
+			return val;
 		};
 
 		var getComplexPropertyValue = (p) => {

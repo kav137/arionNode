@@ -218,6 +218,7 @@ angular.module('app-core.service', [])
 						alert('your session has expired. please logout and login again');
 						return;
 					}
+					console.log(element);
 					element.properties = response.data.properties;
 					element.coefficients = response.data.coefficients;
 					element.method = response.data.method;

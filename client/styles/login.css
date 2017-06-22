@@ -1,0 +1,39 @@
+@font-face {
+  font-family: ubuntu;
+  src: url(fonts/Ubuntu-Medium.ttf);
+}
+@font-face {
+  font-family: ubuntu;
+  font-weight: bold;
+  src: url(fonts/Ubuntu-Bold.ttf);
+}
+@font-face {
+  font-family: ubuntu;
+  font-style: italic;
+  src: url(fonts/Ubuntu-MediumItalic.ttf);
+}
+html {
+  height: 100%;
+}
+html > body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: ubuntu, Tahoma, sans-serif;
+  color: #444444;
+  background-color: #efefef;
+  height: 100%;
+}
+html > body > form {
+  min-width: 250px;
+  max-width: 400px;
+}
+html > body > form > div {
+  padding: 10px;
+}
+html > body > form > div > input {
+  border: 0 solid #a9a9a9;
+  border-bottom-width: 1px;
+  background-color: transparent;
+}

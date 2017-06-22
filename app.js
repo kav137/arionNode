@@ -1,6 +1,4 @@
 let express = require('express');
-let passport = require('passport');
-let path = require('path');
 
 let config = require('./config');
 let services = require('./services');

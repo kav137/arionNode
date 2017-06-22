@@ -1,10 +1,11 @@
 let express = require('express');
 let router = express.Router();
+const elementService = require('../../services/elementService');
 
 let database = require('../../services').database;
 
 router.get('/getElement', (req, res, next) => {
-	console.log('>>> get element route')
+	console.log('>>> get element route');
 	// let className = req.query.cn;
 	let groupName = req.query.gn;
 	// let methodName = req.query.mt;
@@ -26,8 +27,8 @@ router.get('/getElement', (req, res, next) => {
 			}
 		});
 	}))
-		.then(getAllNodesOutcomingOfId)
-		.then(prettifyElementInfo)
+		.then(elementService.getAllNodesOutcomingOfId)
+		.then(elementService.prettifyElementInfo)
 		.then((result) => {
 			res.json(result);
 		});
